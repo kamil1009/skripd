@@ -3,7 +3,11 @@ on load:
  
     set {version2} to result of connect to "https://raw.githubusercontent.com/kamil1009/skripd/master/version.conf"
     {version} is not {version2}:
-        send "Jest dostepna nowa wersja skryptu! Pobierz ja /SkripD -UP"
+        send "Jest dostepna nowa wersja skryptu! Pobierz ja /skripd -UP"
+    if file "plugins/Skript/skripd/" doesn't exists:
+    	send "&cSkripD:>> &bWykryto brak folderu glownego SkripD. Uzyj komendy /skripd init"
+    if file "plugins/Skript/scripts/kbase.sk" doesn't exists:
+    	send "&cSkripD:>> &bWykryto brak skryptu bazowego KBase. Pobierz go za pomoca komendy /skripd -dependency kbase"
         
 command /skripd [<text>] [<text>]:
 	trigger:
@@ -31,6 +35,7 @@ command /skripd [<text>] [<text>]:
 				send "	Uzycie: SkripD [argument] [skrypt]"
 				send "	SkripD -P [skrypt]: (Pobiera skrypt)"
 				send "	SkripD -U [skrypt]: (Usuwa Skrypt)"
+				send "	SkripD -UP : (Aktualizuje SkripD)"
 				send "	SkripD --h: Wyswietla ekran pomocy"
 		if arg 1 is "-UP":
 			if arg 2 is not set:
@@ -38,7 +43,7 @@ command /skripd [<text>] [<text>]:
 				download from "https://raw.githubusercontent.com/kamil1009/skripd/master/skripd.sk" to file "/plugins/Skript/scripts/skripd.sk"
 				execute console command "skript reload SkripD.sk"
 				send "SkripD:>> SkripD zostal zaktualizowany i przeladowany"
-		if arg 1 is "cdir":
+		if arg 1 is "init":
 			if arg 2 is not set:
 				if file "plugins/Skript/skripd/" doesn't exists:
 					if file "plugins/Skript/skripd/repo/" doesn't exists:
@@ -61,4 +66,4 @@ command /skripd [<text>] [<text>]:
 		if arg 1 is not set:
 			if arg 2 is not set:
 				send "SkripD by kamil1009"
-				send "Wersja 0.1.0"
+				send "Wersja 0.1.2"
