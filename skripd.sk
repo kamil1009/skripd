@@ -10,6 +10,7 @@ on load:
     	send "&cSkripD:>> &bWykryto brak skryptu bazowego KBase. Pobierz go za pomoca komendy /skripd --dependency"
         
 command /skripd [<text>] [<text>]:
+	perrmision: skripd.all
 	trigger:
 		if arg 1 is "-P":
 			if arg 2 is set:
