@@ -1,0 +1,48 @@
+on load:
+    set {version} to content of file "plugins/Skript/kbase/kbase/version.conf"
+	send "Pamietaj by uzywac skryptu KBase potrzebny jest dodatek do Skript pod nazwa WildSkript stworzony przez naszego rodaka :)) Dzikoysk'a"
+ 
+    set {version2} to result of connect to "https://raw.githubusercontent.com/kamil1009/kbase/master/version.conf"
+    {version} is not {version2}:
+        send "Jest dostepna nowa wersja skryptu! Pobierz ja /kbase update pobierz"
+ 
+ 
+command /kbase update [<text>]:
+        permission: kbase.update
+    trigger:
+        set {version2} to result of connect to "https://raw.githubusercontent.com/kamil1009/kbase/master/kbase.sk"
+        arg 1 is "sprawdz":
+            send "Twoja wersja to %{version}%"
+            send "Najnowsza wersja to %{version.new}%"
+            {version} is not {version.new}:
+                send "Jest dostepna nowa wersja"
+        arg 2 is "pobierz":
+            {version} is not {version.new}:
+                download "https://raw.githubusercontent.com/kamil1009/kbase/master/kbase.sk" to "plugins/Skript/scripts/kbase.sk"
+                send "Pobrano najnowsza wersje!"
+            else:
+                send "Masz juz najnowsza wersje skrypta!"
+        else:
+            send "/kbase update sprawdz - sprawdza aktualizacje"
+            send "/kbase update pobierz - pobiera aktualizacje"
+        stop
+command /kbase init
+	permission: kbase.init
+	trigger:
+		if file "plugins/Skript/kbase/ doesn't exists:
+			create folder "plugins/Skript/kbase"
+			send "Za inicjowano skrypt KBASE"
+		if file "plugins/Skript/scripts/skripd.sk" doesn't exists:
+			send "Nie posiadasz skryptu SkripD"
+		else:
+			create folder "plugins/Skript/kbase/skripd/"
+
+
+command /kbase:
+        permission: kbase.info
+    executable by: players
+    aliases: /hw
+    trigger:
+            send "KBase version 0.1.6"
+            send "by kamil1009"
+            send "This is base for other scripts by me"
